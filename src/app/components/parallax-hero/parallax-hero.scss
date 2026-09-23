@@ -1,0 +1,635 @@
+// =============================================================================
+// PARALLAX HERO COMPONENT
+// Full-page hero banner with multi-layer parallax scrolling
+// =============================================================================
+
+.parallax-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background: var(--color-bg-darker);
+}
+
+// =============================================================================
+// PARALLAX LAYERS
+// =============================================================================
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  pointer-events: none;
+
+  // Layer 1: Background (z-index: 1)
+  &--bg {
+    z-index: 1;
+  }
+
+  // Layer 2: Shapes (z-index: 2)
+  &--shapes {
+    z-index: 2;
+  }
+
+  // Layer 3: Books (z-index: 3)
+  &--books {
+    z-index: 3;
+    pointer-events: all; // Enable clicks on books
+  }
+
+  // Layer 4: UI (z-index: 4)
+  &--ui {
+    z-index: 4;
+    pointer-events: none; // Allow clicks through to books below
+  }
+}
+
+// =============================================================================
+// LAYER 1: BACKGROUND GRADIENT & PARTICLES
+// =============================================================================
+
+.bg-gradient {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    oklch(0.15 0.15 300) 0%,
+    oklch(0.12 0.18 290) 25%,
+    oklch(0.10 0.18 285) 50%,
+    oklch(0.08 0.15 280) 75%,
+    oklch(0.10 0.12 270) 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+// Particles
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: oklch(0.85 0.18 85); // Gold particles
+  border-radius: 50%;
+  box-shadow:
+    0 0 15px oklch(0.85 0.18 85 / 0.8),
+    0 0 30px oklch(0.85 0.18 85 / 0.4);
+  animation: particleFloat 20s linear infinite;
+  opacity: 0.7;
+
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      left: random(100) * 1%;
+      top: random(100) * 1%;
+      animation-duration: (15 + random(10)) * 1s;
+      animation-delay: random(5) * 1s;
+    }
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(100px, -500px) scale(0);
+    opacity: 0;
+  }
+}
+
+// =============================================================================
+// LAYER 2: GEOMETRIC SHAPES
+// =============================================================================
+
+.shape {
+  position: absolute;
+  opacity: 0.15;
+  border: 3px solid oklch(0.85 0.18 85 / 0.3); // Gold borders
+
+  // Hexagons
+  &--hex {
+    width: 150px;
+    height: 150px;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    background: linear-gradient(135deg, oklch(0.85 0.18 85 / 0.2) 0%, oklch(0.70 0.22 200 / 0.1) 100%);
+    animation: rotateShape 20s linear infinite;
+    box-shadow: 0 0 30px oklch(0.85 0.18 85 / 0.3);
+
+    &-1 {
+      top: 10%;
+      left: 15%;
+      animation-duration: 25s;
+    }
+
+    &-2 {
+      bottom: 20%;
+      right: 10%;
+      animation-duration: 30s;
+      animation-direction: reverse;
+    }
+  }
+
+  // Circles
+  &--circle {
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      oklch(0.70 0.22 200 / 0.3) 0%,
+      oklch(0.65 0.30 330 / 0.2) 50%,
+      transparent 70%
+    );
+    box-shadow: 0 0 50px oklch(0.70 0.22 200 / 0.4);
+
+    &-1 {
+      width: 200px;
+      height: 200px;
+      top: 30%;
+      right: 20%;
+      animation: pulse 8s ease-in-out infinite;
+    }
+  }
+
+  // Lines
+  &--line {
+    height: 3px;
+    width: 300px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.85 0.18 85) 20%,
+      oklch(0.70 0.22 200) 50%,
+      oklch(0.85 0.18 85) 80%,
+      transparent
+    );
+    border: none;
+    box-shadow: 0 0 20px oklch(0.85 0.18 85 / 0.5);
+
+    &-1 {
+      top: 25%;
+      left: 5%;
+      transform: rotate(-15deg);
+      animation: lineSlide 15s ease-in-out infinite;
+    }
+
+    &-2 {
+      bottom: 30%;
+      left: 60%;
+      transform: rotate(25deg);
+      animation: lineSlide 18s ease-in-out infinite reverse;
+    }
+  }
+}
+
+@keyframes rotateShape {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.2;
+  }
+}
+
+@keyframes lineSlide {
+  0%,
+  100% {
+    transform: translateX(0) rotate(-15deg);
+  }
+  50% {
+    transform: translateX(100px) rotate(-15deg);
+  }
+}
+
+// =============================================================================
+// LAYER 3: TILTED BOOKS CONTAINER
+// =============================================================================
+
+.tilted-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-20deg); // Tilt at -20 degrees
+  transform-origin: center center;
+  overflow: visible;
+}
+
+.books-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-2xl);
+  // No counter-rotation needed - books stay aligned horizontally in the tilted container
+}
+
+.book-item {
+  position: relative;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  filter: drop-shadow(0 15px 40px oklch(0 0 0 / 0.6));
+  width: 220px; // Uniform size for alignment
+  flex-shrink: 0;
+  pointer-events: all; // Ensure books are clickable
+
+  &:hover {
+    transform: scale(1.15) translateY(-15px);
+    filter: drop-shadow(0 25px 60px oklch(0.85 0.18 85 / 0.4))
+      drop-shadow(0 0 30px oklch(0.85 0.18 85 / 0.6));
+    z-index: 10;
+
+    .book-glow {
+      opacity: 1;
+      animation: glowPulse 1.5s ease-in-out infinite;
+    }
+  }
+
+  // All books same size, aligned horizontally
+  &--1,
+  &--2,
+  &--3,
+  &--4,
+  &--5 {
+    width: 220px;
+  }
+
+  // Make center book slightly larger for emphasis
+  &--3 {
+    width: 260px;
+    z-index: 5;
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.book-cover {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-md);
+  border: 4px solid oklch(0.85 0.18 85 / 0.4); // Gold border
+  transition: all var(--transition-normal);
+  box-shadow: inset 0 0 20px oklch(0.85 0.18 85 / 0.2);
+
+  .book-item:hover & {
+    border-color: oklch(0.85 0.18 85); // Bright gold on hover
+    box-shadow:
+      inset 0 0 30px oklch(0.85 0.18 85 / 0.4),
+      0 0 40px oklch(0.85 0.18 85 / 0.3);
+  }
+}
+
+.book-glow {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(
+    circle,
+    oklch(0.85 0.18 85 / 0.6) 0%,
+    oklch(0.70 0.22 200 / 0.3) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  border-radius: var(--border-radius-xl);
+  z-index: -1;
+  pointer-events: none; // Important: glow should not block clicks
+}
+
+// =============================================================================
+// LAYER 4: UI CONTENT
+// =============================================================================
+
+.hero-content {
+  position: absolute;
+  bottom: 15%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+  animation: fadeInUp 1s ease-out;
+  pointer-events: none; // Allow clicks to pass through to books below
+
+  // Re-enable pointer events only on interactive elements
+  .btn,
+  a {
+    pointer-events: all;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-title {
+  margin: 0;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+
+  &__line {
+    display: block;
+    font-size: var(--font-size-5xl);
+    line-height: 1;
+    letter-spacing: 0.1em;
+
+    &--1 {
+      font-size: var(--font-size-3xl);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    &--2 {
+      font-size: var(--font-size-6xl);
+      font-weight: var(--font-weight-black);
+      animation: textGlow 2s ease-in-out infinite;
+    }
+
+    &--3 {
+      font-size: var(--font-size-2xl);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+    }
+  }
+}
+
+@keyframes textGlow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 20px oklch(0.85 0.18 85),
+      0 0 40px oklch(0.85 0.18 85),
+      0 0 60px oklch(0.85 0.18 85 / 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 30px oklch(0.70 0.22 200),
+      0 0 60px oklch(0.70 0.22 200),
+      0 0 90px oklch(0.70 0.22 200 / 0.5);
+  }
+}
+
+.hero-subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xl);
+  font-family: var(--font-body);
+}
+
+.hero-cta {
+  margin-top: var(--spacing-xl);
+}
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: var(--spacing-md) var(--spacing-2xl);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+
+  &--primary {
+    background: linear-gradient(
+      135deg,
+      oklch(0.85 0.18 85) 0%,
+      oklch(0.88 0.20 75) 50%,
+      oklch(0.85 0.18 85) 100%
+    );
+    color: oklch(0.15 0.15 300); // Dark purple text
+    box-shadow:
+      0 0 30px oklch(0.85 0.18 85 / 0.6),
+      0 4px 20px oklch(0 0 0 / 0.3),
+      inset 0 1px 0 oklch(1 0 0 / 0.3);
+    border: 3px solid oklch(0.90 0.20 80);
+    text-shadow: 0 1px 2px oklch(1 1 0 / 0.3);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.4), transparent);
+      transition: left var(--transition-slow);
+    }
+
+    &:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow:
+        0 0 50px oklch(0.85 0.18 85),
+        0 0 80px oklch(0.85 0.18 85 / 0.4),
+        0 8px 30px oklch(0 0 0 / 0.4),
+        inset 0 1px 0 oklch(1 0 0 / 0.5);
+      border-color: oklch(0.95 0.25 85);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+  }
+}
+
+// =============================================================================
+// SCROLL INDICATOR
+// =============================================================================
+
+.scroll-indicator {
+  position: absolute;
+  bottom: var(--spacing-2xl);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  animation: bounceUpDown 2s ease-in-out infinite;
+  z-index: 10;
+  pointer-events: none;
+
+  &__line {
+    width: 3px;
+    height: 50px;
+    background: linear-gradient(180deg, oklch(0.85 0.18 85), oklch(0.70 0.22 200), transparent);
+    box-shadow: 0 0 15px oklch(0.85 0.18 85 / 0.6);
+    border-radius: 2px;
+  }
+
+  &__text {
+    font-family: var(--font-display);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.2em;
+    color: oklch(0.85 0.18 85);
+    text-shadow: 0 0 10px oklch(0.85 0.18 85 / 0.5);
+  }
+}
+
+@keyframes bounceUpDown {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+// =============================================================================
+// RESPONSIVE
+// =============================================================================
+
+@media (max-width: 1024px) {
+  .books-container {
+    width: 900px;
+    height: 500px;
+  }
+
+  .book-item {
+    &--1 {
+      width: 220px;
+    }
+    &--2,
+    &--4 {
+      width: 180px;
+    }
+    &--3,
+    &--5 {
+      width: 160px;
+    }
+  }
+
+  .hero-title__line {
+    &--1 {
+      font-size: var(--font-size-2xl);
+    }
+    &--2 {
+      font-size: var(--font-size-5xl);
+    }
+    &--3 {
+      font-size: var(--font-size-xl);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .parallax-hero {
+    min-height: 500px;
+  }
+
+  // Simplify parallax on mobile
+  .tilted-wrapper {
+    transform: rotate(0); // Remove tilt on mobile
+  }
+
+  .books-container {
+    transform: rotate(0);
+    width: 100%;
+    height: 400px;
+    padding: var(--spacing-md);
+  }
+
+  .book-item {
+    &--1 {
+      width: 180px;
+    }
+    &--2,
+    &--3,
+    &--4,
+    &--5 {
+      display: none; // Show only hero book on mobile
+    }
+  }
+
+  .hero-content {
+    bottom: 10%;
+  }
+
+  .hero-title__line {
+    &--1 {
+      font-size: var(--font-size-lg);
+    }
+    &--2 {
+      font-size: var(--font-size-3xl);
+    }
+    &--3 {
+      font-size: var(--font-size-base);
+    }
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+  }
+
+  .btn--primary {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: var(--font-size-base);
+  }
+}

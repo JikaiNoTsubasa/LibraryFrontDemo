@@ -1,0 +1,78 @@
+<!-- Book Detail Page -->
+<div class="book-detail-page">
+  @if (book$ | async; as book) {
+    <div class="container">
+      <div class="book-detail">
+        <!-- Back Button -->
+        <button class="back-btn" (click)="goBack()">
+          <span>← Back to Home</span>
+        </button>
+
+        <div class="book-detail__content">
+          <!-- 3D Book Viewer -->
+          <div class="book-detail__cover">
+            <app-book-3d-viewer
+              [coverImage]="book.coverImage"
+              [title]="book.title"
+              [author]="book.authorName"
+            ></app-book-3d-viewer>
+          </div>
+
+          <!-- Book Info -->
+          <div class="book-detail__info">
+            <h1 class="book-title">{{ book.title }}</h1>
+            @if (book.subtitle) {
+              <h2 class="book-subtitle">{{ book.subtitle }}</h2>
+            }
+
+            <div class="book-meta">
+              <span class="author">By {{ book.authorName }}</span>
+              <span class="separator">•</span>
+              <span class="publisher">{{ book.publisherName }}</span>
+            </div>
+
+            <div class="book-genres">
+              @for (genre of book.genres; track genre) {
+                <span class="genre-tag">{{ genre }}</span>
+              }
+            </div>
+
+            <p class="book-description">{{ book.description }}</p>
+
+            <div class="book-details">
+              <div class="detail-item">
+                <span class="label">Pages:</span>
+                <span class="value">{{ book.pageCount }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Language:</span>
+                <span class="value">{{ book.language }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">ISBN:</span>
+                <span class="value">{{ book.isbn }}</span>
+              </div>
+              @if (book.rating) {
+                <div class="detail-item">
+                  <span class="label">Rating:</span>
+                  <span class="value">{{ book.rating }} / 5.0</span>
+                </div>
+              }
+            </div>
+
+            <div class="book-price">
+              <span class="price-label">Price:</span>
+              <span class="price-value gradient-text">{{ book.price }} {{ book.currency }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="container">
+      <div class="loading">
+        <p>Loading book details...</p>
+      </div>
+    </div>
+  }
+</div>

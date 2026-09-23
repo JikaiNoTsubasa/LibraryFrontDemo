@@ -1,0 +1,57 @@
+<div class="parallax-hero" #heroContainer>
+  <!-- Layer 1: Background gradient with particles effect -->
+  <div class="parallax-layer parallax-layer--bg" [style.transform]="layer1Transform()">
+    <div class="bg-gradient"></div>
+    <div class="particles">
+      @for (particle of [1, 2, 3, 4, 5, 6, 7, 8]; track particle) {
+        <div class="particle" [style.animationDelay]="particle * 0.5 + 's'"></div>
+      }
+    </div>
+  </div>
+
+  <!-- Layer 2: Geometric shapes for depth -->
+  <div class="parallax-layer parallax-layer--shapes" [style.transform]="layer2Transform()">
+    <div class="shape shape--hex shape--hex-1"></div>
+    <div class="shape shape--hex shape--hex-2"></div>
+    <div class="shape shape--circle shape--circle-1"></div>
+    <div class="shape shape--line shape--line-1"></div>
+    <div class="shape shape--line shape--line-2"></div>
+  </div>
+
+  <!-- Layer 3: Book covers (tilted container) -->
+  <div class="parallax-layer parallax-layer--books" [style.transform]="layer3Transform()">
+    <div class="tilted-wrapper">
+      <div class="books-container">
+        @for (book of featuredBooks; track trackByBookId($index, book); let i = $index) {
+          <div class="book-item" [class]="'book-item--' + (i + 1)" (click)="onBookClick(book, $event)">
+            <img [src]="book.coverImage" [alt]="book.title" class="book-cover" loading="eager" />
+            <div class="book-glow"></div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Layer 4: UI elements (title, CTA) - fixed, no parallax -->
+  <div class="parallax-layer parallax-layer--ui">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-title__line hero-title__line--1">DISCOVER</span>
+          <span class="hero-title__line hero-title__line--2 gradient-text">EPIC STORIES</span>
+          <span class="hero-title__line hero-title__line--3">LEVEL UP YOUR READING</span>
+        </h1>
+        <p class="hero-subtitle">Explore our curated collection of gaming-inspired literature</p>
+        <div class="hero-cta">
+          <a href="/catalog" class="btn btn--primary">Explore Catalog</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator">
+    <div class="scroll-indicator__line"></div>
+    <div class="scroll-indicator__text">SCROLL</div>
+  </div>
+</div>

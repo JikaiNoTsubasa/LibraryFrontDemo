@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(node:*)",
+      "WebFetch(domain:i.pinimg.com)",
+      "Bash(ng generate:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

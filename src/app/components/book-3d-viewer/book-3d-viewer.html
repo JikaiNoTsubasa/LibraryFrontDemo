@@ -1,0 +1,46 @@
+<!-- 3D Book Viewer with Three.js -->
+<div class="book-3d-viewer">
+  <!-- Loading Overlay -->
+  @if (isLoading()) {
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading 3D Model...</div>
+      @if (loadingProgress() > 0) {
+        <div class="loading-progress">
+          <div class="progress-bar" [style.width.%]="loadingProgress()"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Viewer Hint -->
+  <div class="viewer-hint">
+    <span class="hint-icon">🖱️</span>
+    <span class="hint-text">
+      Drag to rotate • Scroll to zoom • Click and hold to pan
+    </span>
+  </div>
+
+  <!-- Three.js Canvas -->
+  <div class="canvas-container">
+    <canvas #canvas class="webgl-canvas"></canvas>
+  </div>
+
+  <!-- Viewer Controls -->
+  <div class="viewer-controls">
+    <button class="control-btn" (click)="toggleAutoRotate()">
+      <span class="btn-icon">{{ isAutoRotating() ? '⏸️' : '▶️' }}</span>
+      <span>{{ isAutoRotating() ? 'Pause' : 'Play' }} Auto-Rotation</span>
+    </button>
+    <button class="control-btn" (click)="resetView()">
+      <span class="btn-icon">🔄</span>
+      <span>Reset View</span>
+    </button>
+  </div>
+
+  <!-- Info Text -->
+  <div class="viewer-info">
+    <p class="info-title">{{ title }}</p>
+    <p class="info-author">by {{ author }}</p>
+  </div>
+</div>

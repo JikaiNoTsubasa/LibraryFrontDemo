@@ -1,0 +1,15 @@
+.home-section {
+  padding: var(--spacing-3xl) 0;
+  text-align: center;
+  background: var(--color-bg-dark);
+}
+
+.section-title {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.section-description {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+}

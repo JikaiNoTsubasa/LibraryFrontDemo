@@ -1,0 +1,14 @@
+<!-- Home Page -->
+
+<!-- Parallax Hero Banner with Featured Books -->
+@if (featuredBooks$ | async; as featuredBooks) {
+  <app-parallax-hero [featuredBooks]="featuredBooks" (bookClicked)="onBookClick($event)"></app-parallax-hero>
+}
+
+<!-- Additional homepage content can go here -->
+<section class="home-section">
+  <div class="container">
+    <h2 class="section-title gradient-text">Coming Soon</h2>
+    <p class="section-description">More amazing features are on the way!</p>
+  </div>
+</section>

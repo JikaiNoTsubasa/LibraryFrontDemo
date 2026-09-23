@@ -1,0 +1,299 @@
+// =============================================================================
+// IMPORT PARTIALS (must be first in SCSS)
+// =============================================================================
+
+@use 'styles/mixins';
+@use 'styles/animations';
+@use 'styles/utilities';
+
+// =============================================================================
+// GLOBAL STYLES - Gaming Library
+// Main stylesheet with design tokens and imports
+// =============================================================================
+
+// =============================================================================
+// DESIGN TOKENS (CSS Custom Properties)
+// =============================================================================
+
+:root {
+  // -------------------------------------
+  // Genshin Impact / Gacha Color Palette (OKLCH)
+  // -------------------------------------
+  --color-primary: oklch(0.85 0.18 85); // Brilliant Gold
+  --color-secondary: oklch(0.45 0.25 300); // Royal Purple
+  --color-accent: oklch(0.70 0.22 200); // Electric Cyan
+  --color-danger: oklch(0.65 0.30 330); // Bright Magenta
+  --color-warning: oklch(0.88 0.20 75); // Warm Gold
+  --color-success: oklch(0.75 0.25 165); // Emerald Green
+
+  // Neutral colors - Deep purple tones
+  --color-bg-dark: oklch(0.12 0.08 285); // Deep purple dark
+  --color-bg-darker: oklch(0.08 0.10 280); // Very deep purple
+  --color-text-primary: oklch(0.98 0.02 85); // Warm white with gold tint
+  --color-text-secondary: oklch(0.75 0.08 280); // Light purple gray
+  --color-text-muted: oklch(0.55 0.10 285); // Medium purple gray
+
+  // Gray scale with purple tint
+  --color-gray-900: oklch(0.18 0.08 285);
+  --color-gray-700: oklch(0.38 0.10 285);
+  --color-gray-400: oklch(0.62 0.08 280);
+  --color-gray-200: oklch(0.88 0.05 285);
+
+  // -------------------------------------
+  // Gradients - Genshin Impact style
+  // -------------------------------------
+  --gradient-hero: linear-gradient(
+    135deg,
+    oklch(0.15 0.15 300) 0%,
+    oklch(0.10 0.18 285) 50%,
+    oklch(0.08 0.12 270) 100%
+  );
+
+  --gradient-card: linear-gradient(
+    180deg,
+    oklch(0.20 0.12 295) 0%,
+    oklch(0.12 0.15 285) 100%
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    oklch(0.85 0.18 85) 0%,
+    oklch(0.70 0.22 200) 50%,
+    oklch(0.65 0.30 330) 100%
+  );
+
+  --gradient-rainbow: linear-gradient(
+    90deg,
+    oklch(0.85 0.18 85) 0%,
+    oklch(0.70 0.22 200) 33%,
+    oklch(0.65 0.30 330) 66%,
+    oklch(0.45 0.25 300) 100%
+  );
+
+  // -------------------------------------
+  // Spacing System
+  // -------------------------------------
+  --spacing-xs: 0.5rem; // 8px
+  --spacing-sm: 1rem; // 16px
+  --spacing-md: 1.5rem; // 24px
+  --spacing-lg: 2rem; // 32px
+  --spacing-xl: 3rem; // 48px
+  --spacing-2xl: 4rem; // 64px
+  --spacing-3xl: 6rem; // 96px
+
+  // -------------------------------------
+  // Typography
+  // -------------------------------------
+  --font-display: 'Orbitron', sans-serif; // Gaming display font for headings
+  --font-body: 'Rajdhani', sans-serif; // Clean modern body font
+
+  // Font sizes
+  --font-size-xs: 0.75rem; // 12px
+  --font-size-sm: 0.875rem; // 14px
+  --font-size-base: 1rem; // 16px
+  --font-size-lg: 1.125rem; // 18px
+  --font-size-xl: 1.25rem; // 20px
+  --font-size-2xl: 1.5rem; // 24px
+  --font-size-3xl: 1.875rem; // 30px
+  --font-size-4xl: 2.25rem; // 36px
+  --font-size-5xl: 3rem; // 48px
+  --font-size-6xl: 4rem; // 64px
+
+  // Font weights
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  // Line heights
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  // -------------------------------------
+  // Effects & Shadows
+  // -------------------------------------
+  --shadow-glow: 0 0 20px oklch(0.65 0.25 270 / 0.5);
+  --shadow-glow-lg: 0 0 40px oklch(0.65 0.25 270 / 0.7);
+  --shadow-card: 0 8px 32px oklch(0 0 0 / 0.3);
+  --shadow-card-hover: 0 12px 48px oklch(0 0 0 / 0.4);
+
+  --border-gaming: 2px solid oklch(0.65 0.25 270 / 0.5);
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+
+  // -------------------------------------
+  // Transitions & Animations
+  // -------------------------------------
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  // -------------------------------------
+  // Z-Index Scale
+  // -------------------------------------
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+// =============================================================================
+// GLOBAL RESET & BASE STYLES
+// =============================================================================
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background: var(--color-bg-dark);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+// Typography
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: var(--font-size-5xl);
+}
+
+h2 {
+  font-size: var(--font-size-4xl);
+}
+
+h3 {
+  font-size: var(--font-size-3xl);
+}
+
+h4 {
+  font-size: var(--font-size-2xl);
+}
+
+h5 {
+  font-size: var(--font-size-xl);
+}
+
+h6 {
+  font-size: var(--font-size-lg);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: var(--font-display);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all var(--transition-normal);
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+// =============================================================================
+// SCROLLBAR STYLING (Webkit/Chrome)
+// =============================================================================
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--border-radius-sm);
+
+  &:hover {
+    background: var(--color-accent);
+  }
+}
+
+// =============================================================================
+// SELECTION STYLING
+// =============================================================================
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-text-primary);
+}
+
+::-moz-selection {
+  background: var(--color-primary);
+  color: var(--color-text-primary);
+}
+
+// =============================================================================
+// FOCUS STYLES
+// =============================================================================
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

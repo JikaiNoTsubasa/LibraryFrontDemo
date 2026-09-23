@@ -1,0 +1,144 @@
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  background: oklch(0.15 0.05 270 / 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 2px solid oklch(0.65 0.25 270 / 0.3);
+  box-shadow: 0 4px 30px oklch(0 0 0 / 0.3);
+
+  // Fallback for browsers that don't support backdrop-filter
+  @supports not (backdrop-filter: blur(20px)) {
+    background: oklch(0.15 0.05 270 / 0.95);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) 0;
+    min-height: 80px;
+  }
+
+  // Logo
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    transition: transform var(--transition-fast);
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &-text {
+      font-family: var(--font-display);
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-black);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    &-divider {
+      width: 3px;
+      height: 30px;
+      background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--color-primary);
+    }
+  }
+
+  // Navigation
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+
+    &-link {
+      font-family: var(--font-display);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: var(--spacing-xs) var(--spacing-md);
+      border-radius: var(--border-radius-sm);
+      position: relative;
+      transition: all var(--transition-normal);
+
+      // Hover effect
+      &:hover {
+        color: var(--color-text-primary);
+        background: oklch(0.2 0.1 270 / 0.3);
+        transform: translateY(-2px);
+      }
+
+      // Active state
+      &.active {
+        color: var(--color-accent);
+        background: oklch(0.2 0.1 270 / 0.5);
+        box-shadow: 0 0 15px oklch(0.70 0.28 330 / 0.3);
+
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+        }
+      }
+
+      // Gaming corner accents
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 6px;
+        height: 6px;
+        border-top: 2px solid transparent;
+        border-right: 2px solid transparent;
+        transition: border-color var(--transition-fast);
+      }
+
+      &:hover::after,
+      &.active::after {
+        border-top-color: var(--color-accent);
+        border-right-color: var(--color-accent);
+      }
+    }
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    &__content {
+      flex-direction: column;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md) 0;
+    }
+
+    &__logo {
+      &-text {
+        font-size: var(--font-size-xl);
+      }
+    }
+
+    &__nav {
+      width: 100%;
+      justify-content: center;
+      gap: var(--spacing-md);
+
+      &-link {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
+}

@@ -1,0 +1,234 @@
+// =============================================================================
+// ANIMATIONS - Gaming Library
+// Keyframe animations and utility animation classes
+// =============================================================================
+
+// Float Animation
+// Gentle floating motion for ambient elements
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+// Pulse Glow Animation
+// Pulsing glow effect for highlighted elements
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px oklch(0.65 0.25 270 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px oklch(0.65 0.25 270 / 0.8), 0 0 60px oklch(0.65 0.25 270 / 0.4);
+  }
+}
+
+// Slide In Up Animation
+// Reveal animation for elements entering viewport
+@keyframes slide-in-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Slide In Down
+@keyframes slide-in-down {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Slide In Left
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Slide In Right
+@keyframes slide-in-right {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Fade In
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Scale In
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// Rotate Continuous
+// For loading spinners and rotating elements
+@keyframes rotate-continuous {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Shimmer Effect
+// Shimmering highlight for loading states
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+// Flicker Glow
+// Subtle flickering for neon/cyberpunk elements
+@keyframes flicker-glow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 10px var(--color-primary),
+      0 0 20px var(--color-primary);
+  }
+  50% {
+    text-shadow:
+      0 0 5px var(--color-primary),
+      0 0 10px var(--color-primary);
+  }
+}
+
+// =============================================================================
+// UTILITY ANIMATION CLASSES
+// Apply these classes to trigger animations
+// =============================================================================
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-down {
+  animation: slide-in-down 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-spin {
+  animation: rotate-continuous 2s linear infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    oklch(0.2 0.05 270) 0%,
+    oklch(0.3 0.1 270) 50%,
+    oklch(0.2 0.05 270) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-flicker {
+  animation: flicker-glow 3s ease-in-out infinite;
+}
+
+// =============================================================================
+// STAGGER DELAYS FOR SEQUENTIAL ANIMATIONS
+// Use with slide-in animations for cascading effects
+// =============================================================================
+
+.stagger-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.stagger-delay-4 {
+  animation-delay: 0.4s;
+}
+
+.stagger-delay-5 {
+  animation-delay: 0.5s;
+}
+
+// =============================================================================
+// ACCESSIBILITY: RESPECT REDUCED MOTION
+// Disable all animations if user prefers reduced motion
+// =============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

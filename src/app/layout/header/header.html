@@ -1,0 +1,20 @@
+<header class="header">
+  <div class="container">
+    <div class="header__content">
+      <!-- Logo -->
+      <a routerLink="/" class="header__logo">
+        <span class="header__logo-text gradient-text">GAMING</span>
+        <span class="header__logo-divider"></span>
+        <span class="header__logo-text">LIBRARY</span>
+      </a>
+
+      <!-- Navigation -->
+      <nav class="header__nav">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="header__nav-link">
+          Home
+        </a>
+        <a routerLink="/catalog" routerLinkActive="active" class="header__nav-link"> Catalog </a>
+      </nav>
+    </div>
+  </div>
+</header>
